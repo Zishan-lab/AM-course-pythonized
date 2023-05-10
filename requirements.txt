@@ -1,6 +1,5 @@
 
 yfinance
-import plotly.express
-import plotly.graph_objects
+plotly
 alpha_vantage
 stocknews
