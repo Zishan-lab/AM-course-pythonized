@@ -1,0 +1,6 @@
+
+yfinance
+import plotly.express
+import plotly.graph_objects
+alpha_vantage
+stocknews
