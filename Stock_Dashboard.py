@@ -15,11 +15,12 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-
+import datetime
 #initialize streamlit webapp
+default_date = datetime.date(2023,1,3)
 st.title("Stock Dashboard")
 ticker = st.sidebar.text_input('Ticker',value='MSFT')
-start_date = st.sidebar.date_input('Start Date')
+start_date = st.sidebar.date_input('Start Date',value=default_date)
 end_date = st.sidebar.date_input('End Date')
 
 #download yfinance data
