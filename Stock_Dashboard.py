@@ -18,8 +18,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import datetime
-
-#testing function for formatting numbers of Fundamental data
+from sklearn.linear_model import LinearRegression
 
 def format_dataframe(df):
     
@@ -41,31 +40,80 @@ end_date = st.sidebar.date_input('End Date')
 #download yfinance data
 data = yf.download(ticker,start=start_date,end=end_date)
 
-#plotting the data with values below the mean in a lighter color than the ones above the mean
-fig = go.Figure() #testing projections
-mean_value = data['Adj Close'].mean()
+#add a projection for the next day using linear regression
 
+df = pd.DataFrame()
+df['Adj Close'] = data['Adj Close']
+df['Next Day'] = df['Adj Close'].shift(-1)
+
+# Drop the last row since it will have NaN for the "Next Day" value
+df = df.dropna()
+
+# Split the data into features (X) and target (y)
+X = df[['Adj Close']]
+y = df['Next Day']
+
+# Create and train the linear regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Get the last observed "Adj Close" value to predict the next day's value
+last_adj_close = df['Adj Close'].iloc[-1]
+
+# Predict the value for the next day
+next_day_prediction = model.predict([[last_adj_close]])
+
+# Create a scatter plot of the 'Adj Close' data
+fig = go.Figure()
 fig.add_trace(go.Scatter(
-    x=data.index,
-    y=data['Adj Close'],
+    x=df.index,
+    y=df['Adj Close'],
     mode='markers',
     name='Actuals'
+))
+
+# Add the predicted value for the next day as a scatter point
+next_day = df.index[-1] + pd.DateOffset(days=1)
+fig.add_trace(go.Scatter(
+    x=[next_day],
+    y=next_day_prediction,
+    mode='markers',
+    name='Next Day Prediction'
+))
+
+# Set plot title and axis labels
+fig.update_layout(
+    title='Adjusted Close Price',
+    xaxis_title='Date',
+    yaxis_title='Adj Close'
+)
+
+
+#plotting the data
+#fig = go.Figure() #testing projections
+mean_value = data['Adj Close'].mean()
+
+#fig.add_trace(go.Scatter(
+    #x=data.index,
+    #y=data['Adj Close'],
+    #mode='markers',
+    #name='Actuals'
 ))
 #fig = px.line(data, x = data.index, y = data['Adj Close'], title = ticker)
 
 # Add a horizontal line for the mean value
 fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
 
-last_adj_close = data['Adj Close'].iloc[-1]
-next_day = pd.to_datetime(data.index[-1]) + pd.DateOffset(days=1)
-fig.add_trace(go.Scatter(
-    x=[next_day],
-    y=[last_adj_close],
-    mode='lines',
-    name='Projected Value'
+#last_adj_close = data['Adj Close'].iloc[-1]
+#next_day = pd.to_datetime(data.index[-1]) + pd.DateOffset(days=1)
+#fig.add_trace(go.Scatter(
+    #x=[next_day],
+    #y=[last_adj_close],
+    #mode='lines',
+    #name='Projected Value'
 ))
 # Update x-axis range to include projected value
-fig.update_xaxes(range=[data.index[0], next_day])
+#fig.update_xaxes(range=[data.index[0], next_day])
 
 # Set plot title and axis labels
 fig.update_layout(
