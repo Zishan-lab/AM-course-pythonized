@@ -5,3 +5,4 @@ alpha_vantage
 stocknews
 streamlit
 scikit-learn
+scipy
