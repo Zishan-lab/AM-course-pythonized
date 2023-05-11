@@ -82,11 +82,11 @@ fig.add_trace(go.Scatter(
 ))
 
 # Set plot title and axis labels
-fig.update_layout(
-    title='Adjusted Close Price',
-    xaxis_title='Date',
-    yaxis_title='Adj Close'
-)
+#fig.update_layout(
+   # title='Adjusted Close Price',
+   # xaxis_title='Date',
+   # yaxis_title='Adj Close'
+#)
 
 
 #plotting the data
@@ -117,7 +117,7 @@ fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
 
 # Set plot title and axis labels
 fig.update_layout(
-    title='Adjusted Close Price',
+    title='Price evolution of ' + ticker,
     xaxis_title='Date',
     yaxis_title='Adj Close'
 )
