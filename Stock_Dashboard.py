@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+link :  https://zishan-lab-am-course-pythonized-stock-dashboard-6ozc6k.streamlit.app/
 Created on Mon May  1 18:21:52 2023
 Todos : 
     - Add additional information on Pricing Data
@@ -16,6 +17,19 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import datetime
+
+#testing function for formatting numbers of Fundamental data
+
+def format_dataframe(df):
+    # Create a copy of the DataFrame
+    formatted_df = df.copy()
+
+    # Iterate over columns (except index and first row)
+    for col in formatted_df.columns[1:]:
+        if formatted_df.dtypes[col] == 'float64' or formatted_df.dtypes[col] == 'int64':
+            # Apply formatting to numerical columns
+            formatted_df[col] = formatted_df[col].apply(lambda x: '${:,.2f}'.format(x / 1000))
+
 #initialize streamlit webapp
 default_date = datetime.date(2023,1,3)
 st.title("Stock Dashboard")
@@ -60,6 +74,7 @@ with fundamental_data:
     balance_sheet = fd.get_balance_sheet_annual(ticker)[0]
     bs = balance_sheet.T[2:]
     bs.columns = list(balance_sheet.T.iloc[0])
+    format_dataframe(bs)
     st.write(bs)
     
     st.subheader(f'Income Statement of {ticker}')
