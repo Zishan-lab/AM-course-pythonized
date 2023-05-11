@@ -111,7 +111,7 @@ fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
     #y=[last_adj_close],
     #mode='lines',
     #name='Projected Value'
-))
+#))
 # Update x-axis range to include projected value
 #fig.update_xaxes(range=[data.index[0], next_day])
 
