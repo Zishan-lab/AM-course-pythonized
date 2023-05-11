@@ -19,6 +19,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import datetime
 from sklearn.linear_model import LinearRegression
+from scipy.stats import t
 
 def format_dataframe(df):
     
