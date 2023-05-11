@@ -124,9 +124,9 @@ with pricing_data:
     st.write('Standard deviation is ', round(stdev*100,3), '%')
     st.write('Risk Adj. return is ', round(annual_return/(stdev*100),3), '%')
     st.write('Volatility for the period is ', round(vol,3), '%')
-    st.write("Next Day Price Prediction:", next_day_prediction[0])
-    st.write("Lower Bound ({}% confidence):".format(confidence_interval * 100), lower_bound[0])
-    st.write("Upper Bound ({}% confidence):".format(confidence_interval * 100), upper_bound[0])
+    st.write("Next Day Price Prediction:", round(next_day_prediction[0],3), " $")
+    st.write("Lower Bound ({}% confidence):".format(confidence_interval * 100), round(lower_bound[0],3), " $")
+    st.write("Upper Bound ({}% confidence):".format(confidence_interval * 100), round(upper_bound[0],3, " $")
 
 from alpha_vantage.fundamentaldata import FundamentalData
 
