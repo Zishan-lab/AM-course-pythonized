@@ -42,11 +42,46 @@ end_date = st.sidebar.date_input('End Date')
 data = yf.download(ticker,start=start_date,end=end_date)
 
 #plotting the data with values below the mean in a lighter color than the ones above the mean
+fig = go.Figure() #testing projections
 mean_value = data['Adj Close'].mean()
-fig = px.line(data, x = data.index, y = data['Adj Close'], title = ticker)
+
+fig.add_trace(go.Scatter(
+    x=data.index,
+    y=data['AdjClose'],
+    mode='markers',
+    name='Actuals'
+))
+#fig = px.line(data, x = data.index, y = data['Adj Close'], title = ticker)
 
 # Add a horizontal line for the mean value
 fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
+
+last_adj_close = data['AdjClose'].iloc[-1]
+next_day = pd.to_datetime(df.index.iloc[-1]) + pd.DateOffset(days=1)
+fig.add_trace(go.Scatter(
+    x=[next_day],
+    y=[last_adj_close],
+    mode='lines',
+    name='Projected Value'
+))
+# Update x-axis range to include projected value
+fig.update_xaxes(range=[df.index.iloc[0], next_day])
+
+# Set plot title and axis labels
+fig.update_layout(
+    title='Adjusted Close Price',
+    xaxis_title='Date',
+    yaxis_title='Adj Close'
+)
+
+# Add annotation with the mean value
+fig.add_annotation(
+    x=data.index.iloc[0],  # Adjust the x-coordinate for annotation placement
+    y=mean_value,
+    text=f"Mean Value: {mean_value}",
+    showarrow=False,
+    font=dict(color='red')
+)
 
 st.plotly_chart(fig)
 
