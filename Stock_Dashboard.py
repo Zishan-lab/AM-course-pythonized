@@ -7,6 +7,7 @@ Todos :
     - Add additional information on Pricing Data
     - Improve readability of Fundamental Data
     - Add a DCF
+    
 
 @author: zishan-lab
 """
