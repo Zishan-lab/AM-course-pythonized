@@ -73,6 +73,7 @@ with fundamental_data:
     bs = balance_sheet.T[2:]
     bs.columns = list(balance_sheet.T.iloc[0])
     format_dataframe(bs)
+    bs.index = bs.index.str.replace(r'(?<=[a-z])(?=[A-Z])', ' ')
     st.write(bs)
     
     st.subheader(f'Income Statement of {ticker} in 000\'s')
@@ -80,6 +81,7 @@ with fundamental_data:
     is1 = income_statement.T[2:]
     is1.columns = list(income_statement.T.iloc[0])
     format_dataframe(is1)
+    is1.index = is1.index.str.replace(r'(?<=[a-z])(?=[A-Z])', ' ')
     st.write(is1)
     
     st.subheader(f'Cash Flow Statement of {ticker} in 000\'s')
@@ -87,6 +89,7 @@ with fundamental_data:
     cf = cash_flow.T[2:]
     cf.columns = list(cash_flow.T.iloc[0])
     format_dataframe(cf)
+    cf.index = cf.index.str.replace(r'(?<=[a-z])(?=[A-Z])', ' ')
     st.write(cf)
     
 
