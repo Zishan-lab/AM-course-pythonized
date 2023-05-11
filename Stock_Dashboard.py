@@ -80,7 +80,7 @@ y_pred = model.predict(X_array)
 residuals = y - y_pred
 mean_residual = np.mean(residuals)
 std_residual = np.std(residuals)
-t_score = np.abs(t.ppf((1 - confidence_interval) / 2, df=len(X_array) - 2))
+t_score = np.abs(t.ppf((1 - confidence_interval) / 2, df=len(X_array) - 1))
 margin_error = t_score * std_residual
 lower_bound = next_day_prediction - margin_error
 upper_bound = next_day_prediction + margin_error
