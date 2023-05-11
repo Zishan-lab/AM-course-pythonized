@@ -21,14 +21,11 @@ import datetime
 #testing function for formatting numbers of Fundamental data
 
 def format_dataframe(df):
-    # Create a copy of the DataFrame
-    formatted_df = df.copy()
-
     # Iterate over columns (except index and first row)
-    for col in formatted_df.columns[1:]:
-        if formatted_df.dtypes[col] == 'float64' or formatted_df.dtypes[col] == 'int64':
+    for col in df.columns[1:]:
+        if df.dtypes[col] == 'float64' or df.dtypes[col] == 'int64':
             # Apply formatting to numerical columns
-            formatted_df[col] = formatted_df[col].apply(lambda x: '${:,.2f}'.format(x / 1000))
+            df[col] = df[col].apply(lambda x: '${:,.2f}'.format(x / 1000))
 
 #initialize streamlit webapp
 default_date = datetime.date(2023,1,3)
