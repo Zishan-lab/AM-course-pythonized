@@ -75,9 +75,10 @@ fig.update_layout(
 )
 
 # Add annotation with the mean value
+mean_value_adj = mean_value + 15
 fig.add_annotation(
     x=data.index[0],  # Adjust the x-coordinate for annotation placement
-    y=mean_value +15 
+    y= mean_value_adj
     text=f"Mean Value: {mean_value}",
     showarrow=False,
     font=dict(color='red')
@@ -94,7 +95,7 @@ with pricing_data:
     data2.dropna(inplace = True)
     annual_return = data2['% change'].mean()*252*100
     stdev = np.std(data2["% change"]*np.sqrt(252))
-    vol = np.sqrt((annual_return / 100) * (annual_return/(stdev*100)) * (252 / len(mean_value)) * (mean_value - standard_deviation) ** 2)
+    vol = np.sqrt((annual_return / 100) * (annual_return/(stdev*100)) * (252) * (mean_value - standard_deviation) ** 2)
     
     st.write('Annual return is ', round(annual_return,3), '%')
     st.write('Standard deviation is ', round(stdev*100,3), '%')
