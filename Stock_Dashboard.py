@@ -89,7 +89,7 @@ upper_bound = next_day_prediction + margin_error
 next_day = df.index[-1] + pd.DateOffset(days=1)
 fig.add_trace(go.Scatter(
     x=[next_day],
-    y=[next_day_prediction],
+    y=next_day_prediction,
     mode='markers',
     name='Next Day Prediction'
 ))
