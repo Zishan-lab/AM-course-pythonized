@@ -77,7 +77,7 @@ fig.update_layout(
 # Add annotation with the mean value
 fig.add_annotation(
     x=data.index[0],  # Adjust the x-coordinate for annotation placement
-    y=mean_value,
+    y=mean_value +15 
     text=f"Mean Value: {mean_value}",
     showarrow=False,
     font=dict(color='red')
