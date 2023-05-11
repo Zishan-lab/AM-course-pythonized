@@ -85,7 +85,7 @@ with pricing_data:
     data2.dropna(inplace = True)
     annual_return = data2['% change'].mean()*252*100
     stdev = np.std(data2["% change"]*np.sqrt(252))
-    vol = np.sqrt((annual_return / 100) * (annual_return/(stdev*100)) * (252) * (mean_value - standard_deviation) ** 2)
+    vol = np.sqrt((annual_return / 100) * (annual_return/(stdev*100)) * (252) * (mean_value - stdev) ** 2)
     
     st.write('Mean value for the period is ', round(mean_value,3), " $")
     st.write('Annual return is ', round(annual_return,3), '%')
