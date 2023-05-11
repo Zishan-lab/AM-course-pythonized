@@ -4,3 +4,4 @@ plotly
 alpha_vantage
 stocknews
 streamlit
+sklearn.linear_model
