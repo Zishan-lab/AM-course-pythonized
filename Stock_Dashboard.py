@@ -5,7 +5,7 @@ link :  https://zishan-lab-am-course-pythonized-stock-dashboard-6ozc6k.streamlit
 Created on Mon May  1 18:21:52 2023
 Todos : 
     - Add additional information on Pricing Data
-    - Improve readability of Fundamental Data
+    - Improve readability of Fundamental Data : done for numbers, missing spaces added to the indexes
     - Add a DCF
     
 
