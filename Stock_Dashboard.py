@@ -102,6 +102,14 @@ fig.add_trace(go.Scatter(
     name='Confidence Interval'
 ))
 
+fig.add_trace(go.Scatter(
+    x=[next_day, next_day],
+    y=[lower_bound, upper_bound],
+    mode='markers',
+    marker=dict(color='black'),
+    showlegend=False
+))
+
 mean_value = data['Adj Close'].mean()
 
 # Add a horizontal line for the mean value
