@@ -74,16 +74,6 @@ fig.update_layout(
     yaxis_title='Adj Close'
 )
 
-# Add annotation with the mean value
-mean_value_adj = mean_value + 15
-fig.add_annotation(
-    x=data.index[0],  # Adjust the x-coordinate for annotation placement
-    y= mean_value_adj,
-    text = f'Mean Value: {mean_value} $',
-    showarrow=False,
-    font=dict(color='red')
-)
-
 st.plotly_chart(fig)
 
 pricing_data, fundamental_data, news = st.tabs(["Pricing Data", "Fundamental Data", "Top 10 News"])
@@ -97,6 +87,7 @@ with pricing_data:
     stdev = np.std(data2["% change"]*np.sqrt(252))
     vol = np.sqrt((annual_return / 100) * (annual_return/(stdev*100)) * (252) * (mean_value - standard_deviation) ** 2)
     
+    st.write('Mean value for the period is ', round(mean_value,3), " $")
     st.write('Annual return is ', round(annual_return,3), '%')
     st.write('Standard deviation is ', round(stdev*100,3), '%')
     st.write('Risk Adj. return is ', round(annual_return/(stdev*100),3), '%')
