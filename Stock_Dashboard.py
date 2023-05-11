@@ -57,7 +57,7 @@ fig.add_trace(go.Scatter(
 fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
 
 last_adj_close = data['Adj Close'].iloc[-1]
-next_day = pd.to_datetime(data.index.iloc[-1]) + pd.DateOffset(days=1)
+next_day = pd.to_datetime(data.index[-1]) + pd.DateOffset(days=1)
 fig.add_trace(go.Scatter(
     x=[next_day],
     y=[last_adj_close],
@@ -65,7 +65,7 @@ fig.add_trace(go.Scatter(
     name='Projected Value'
 ))
 # Update x-axis range to include projected value
-fig.update_xaxes(range=[data.index.iloc[0], next_day])
+fig.update_xaxes(range=[data.index[0], next_day])
 
 # Set plot title and axis labels
 fig.update_layout(
@@ -76,7 +76,7 @@ fig.update_layout(
 
 # Add annotation with the mean value
 fig.add_annotation(
-    x=data.index.iloc[0],  # Adjust the x-coordinate for annotation placement
+    x=data.index[0],  # Adjust the x-coordinate for annotation placement
     y=mean_value,
     text=f"Mean Value: {mean_value}",
     showarrow=False,
