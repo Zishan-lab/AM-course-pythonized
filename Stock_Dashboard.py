@@ -98,7 +98,7 @@ mean_value = data['Adj Close'].mean()
     #y=data['Adj Close'],
     #mode='markers',
     #name='Actuals'
-))
+#))
 #fig = px.line(data, x = data.index, y = data['Adj Close'], title = ticker)
 
 # Add a horizontal line for the mean value
