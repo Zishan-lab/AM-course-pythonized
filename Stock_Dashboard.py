@@ -94,10 +94,12 @@ with pricing_data:
     data2.dropna(inplace = True)
     annual_return = data2['% change'].mean()*252*100
     stdev = np.std(data2["% change"]*np.sqrt(252))
+    vol = np.sqrt((annual_return / 100) * (annual_return/(stdev*100)) * (252 / len(mean_value)) * (mean_value - standard_deviation) ** 2)
     
     st.write('Annual return is ', round(annual_return,3), '%')
     st.write('Standard deviation is ', round(stdev*100,3), '%')
     st.write('Risk Adj. return is ', round(annual_return/(stdev*100),3), '%')
+    st.write('Volatility for the period is ', round(vol,3), '%')
 
 from alpha_vantage.fundamentaldata import FundamentalData
 
