@@ -26,7 +26,7 @@ def format_dataframe(df):
         df[col] = df[col].astype(float64)
         if df.dtypes[col] == 'float64' or df.dtypes[col] == 'int64':
             # Apply formatting to numerical columns
-        df[col] = df[col].apply(lambda x: '${:,.2f}'.format(x / 1000))
+            df[col] = df[col].apply(lambda x: '${:,.2f}'.format(x / 1000))
 
 #initialize streamlit webapp
 default_date = datetime.date(2023,1,3)
