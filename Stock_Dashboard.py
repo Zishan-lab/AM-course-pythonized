@@ -72,48 +72,39 @@ fig.add_trace(go.Scatter(
     name='Actuals'
 ))
 
+# Calculate the confidence interval
+confidence_interval = 0.95  # Set the desired confidence interval
+X_array = np.array(X)
+y_pred = model.predict(X_array)
+residuals = y - y_pred
+mean_residual = np.mean(residuals)
+std_residual = np.std(residuals)
+t_score = np.abs(t.ppf((1 - confidence_interval) / 2, df=len(X_array) - 2))
+margin_error = t_score * std_residual
+lower_bound = next_day_prediction - margin_error
+upper_bound = next_day_prediction + margin_error
+
 # Add the predicted value for the next day as a scatter point
 next_day = df.index[-1] + pd.DateOffset(days=1)
 fig.add_trace(go.Scatter(
     x=[next_day],
-    y=next_day_prediction,
+    y=[next_day_prediction],
     mode='markers',
     name='Next Day Prediction'
 ))
 
-# Set plot title and axis labels
-#fig.update_layout(
-   # title='Adjusted Close Price',
-   # xaxis_title='Date',
-   # yaxis_title='Adj Close'
-#)
+#Add the confidence interval
+fig.add_trace(go.Scatter(
+    x=[next_day, next_day],
+    y=[lower_bound, upper_bound],
+    mode='lines',
+    name='Confidence Interval'
+))
 
-
-#plotting the data
-#fig = go.Figure() #testing projections
 mean_value = data['Adj Close'].mean()
-
-#fig.add_trace(go.Scatter(
-    #x=data.index,
-    #y=data['Adj Close'],
-    #mode='markers',
-    #name='Actuals'
-#))
-#fig = px.line(data, x = data.index, y = data['Adj Close'], title = ticker)
 
 # Add a horizontal line for the mean value
 fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
-
-#last_adj_close = data['Adj Close'].iloc[-1]
-#next_day = pd.to_datetime(data.index[-1]) + pd.DateOffset(days=1)
-#fig.add_trace(go.Scatter(
-    #x=[next_day],
-    #y=[last_adj_close],
-    #mode='lines',
-    #name='Projected Value'
-#))
-# Update x-axis range to include projected value
-#fig.update_xaxes(range=[data.index[0], next_day])
 
 # Set plot title and axis labels
 fig.update_layout(
