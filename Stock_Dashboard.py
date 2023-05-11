@@ -94,22 +94,6 @@ fig.add_trace(go.Scatter(
     name='Next Day Prediction'
 ))
 
-#Add the confidence interval
-fig.add_trace(go.Scatter(
-    x=[next_day, next_day],
-    y=[lower_bound, upper_bound],
-    mode='lines',
-    name='Confidence Interval'
-))
-
-fig.add_trace(go.Scatter(
-    x=[next_day, next_day],
-    y=[lower_bound, upper_bound],
-    mode='markers',
-    marker=dict(color='black'),
-    showlegend=False
-))
-
 mean_value = data['Adj Close'].mean()
 
 # Add a horizontal line for the mean value
@@ -140,6 +124,9 @@ with pricing_data:
     st.write('Standard deviation is ', round(stdev*100,3), '%')
     st.write('Risk Adj. return is ', round(annual_return/(stdev*100),3), '%')
     st.write('Volatility for the period is ', round(vol,3), '%')
+    st.write("Next Day Price Prediction:", next_day_prediction[0])
+    st.write("Lower Bound ({}% confidence):".format(confidence_interval * 100), lower_bound[0])
+    st.write("Upper Bound ({}% confidence):".format(confidence_interval * 100), upper_bound[0])
 
 from alpha_vantage.fundamentaldata import FundamentalData
 
