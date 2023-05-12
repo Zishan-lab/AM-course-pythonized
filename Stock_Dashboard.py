@@ -58,7 +58,7 @@ model.fit(X, y)
 # Predict the next 7 days' prices
 last_day = len(df) - 1
 current_day = pd.to_datetime(data.index[-1])
-predicted_dates = pd.date_range(start=current_day + pd.DateOffset(days=1), periods=7, freq='D')
+predicted_dates = pd.date_range(start=current_day, periods=7, freq='D')
 for i in range(7):
     next_day = last_day + i + 1
     next_day_prediction = model.predict([[next_day]])
