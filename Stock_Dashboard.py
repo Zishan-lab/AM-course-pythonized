@@ -52,21 +52,19 @@ for i in range(7):
     # Split the data into features (X) and target (y)
     X = np.array(range(len(df))).reshape(-1, 1)
     y = df['Adj Close']
+     # Create and train the linear regression model
+    model = LinearRegression()
+    model.fit(X, y)
     
-# Create and train the linear regression model
-model = LinearRegression()
-model.fit(X, y)
-
-# Predict the next day's price
-next_day = len(df)
-next_day_prediction = model.predict([[next_day]])
-next_7_days.append(next_day_prediction[0])
-    
-# Append the predicted price to the DataFrame for the next iteration
-df.loc[len(df)] = next_day_prediction[0]
+    # Predict the next day's price
+    next_day = len(df) + i
+    next_day_prediction = model.predict([[next_day]])
+    next_7_days.append(next_day_prediction[0])
 
 # Generate the x-axis values for the plot
-dates = pd.date_range(start=data.index[0], periods=len(data) + 7, freq='D')
+dates = pd.date_range(start=data.index[0], periods=len(data), freq='D')
+predicted_dates = pd.date_range(start=data.index[-1] + pd.DateOffset(days=1), periods=7, freq='D')
+all_dates = pd.concat([dates, predicted_dates])
 
 # Plot the actual prices and the predicted trend
 fig = go.Figure()
