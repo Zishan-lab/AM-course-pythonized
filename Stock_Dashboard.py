@@ -30,7 +30,7 @@ def format_dataframe(df):
         df[col] = df[col].apply(lambda x: int(x) if x != 'None' else None)
         if df.dtypes[col] == 'float64' or df.dtypes[col] == 'int64':
             # Apply formatting to numerical columns
-            df[col] = df[col].apply(lambda x: '${:,.0f}'.format(x / 1000))
+            df[col] = df[col].apply(lambda x: '${:,.0f}'.format(x / 1000000))
 
 #initialize streamlit webapp
 default_date = datetime.date(2023,1,3)
@@ -121,21 +121,21 @@ with fundamental_data:
     key = "9G0813X19QOSFDUY"
     fd = FundamentalData(key,output_format="pandas")
     
-    st.subheader(f'Balance Sheet of {ticker} in 000\'s')
+    st.subheader(f'Balance Sheet of {ticker} in millions')
     balance_sheet = fd.get_balance_sheet_annual(ticker)[0]
     bs = balance_sheet.T[2:]
     bs.columns = list(balance_sheet.T.iloc[0])
     format_dataframe(bs)
     st.write(bs)
     
-    st.subheader(f'Income Statement of {ticker} in 000\'s')
+    st.subheader(f'Income Statement of {ticker} in millions')
     income_statement = fd.get_income_statement_annual(ticker)[0]
     is1 = income_statement.T[2:]
     is1.columns = list(income_statement.T.iloc[0])
     format_dataframe(is1)
     st.write(is1)
     
-    st.subheader(f'Cash Flow Statement of {ticker} in 000\'s')
+    st.subheader(f'Cash Flow Statement of {ticker} in millions')
     cash_flow = fd.get_cash_flow_annual(ticker)[0]
     cf = cash_flow.T[2:]
     cf.columns = list(cash_flow.T.iloc[0])
