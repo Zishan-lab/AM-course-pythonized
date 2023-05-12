@@ -83,7 +83,7 @@ fig.add_trace(go.Scatter(x=predicted_dates, y=next_7_days, mode='markers', name=
 mean_value = data['Adj Close'].mean()
 
 # Add a horizontal line for the mean value
-fig.add_hline(y=mean_value, line=dict(color='red', dash='dash'))
+fig.add_hline(y=mean_value, name=f'Mean Value: {mean_value:.3f} $', line=dict(color='red', dash='dash'))
 
 # Set plot title and axis labels
 fig.update_layout(
