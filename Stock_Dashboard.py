@@ -50,7 +50,7 @@ df['Next Day'] = df['Adj Close'].shift(-1)
 # Drop the last row since it will have NaN for the "Next Day" value
 df = df.dropna()
 
-# Split the data into features (X) and target (y) excluding the two last rows
+# Split the data into features (X) and target (y)
 X = df[['Adj Close']
 y = df['Next Day']
 
