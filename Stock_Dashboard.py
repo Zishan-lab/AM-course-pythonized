@@ -71,8 +71,8 @@ all_dates = dates.append(predicted_dates)
 
 # Plot the actual prices and the predicted trend
 fig = go.Figure()
-fig.add_trace(go.Scatter(x=data.index, y=data['Adj Close'], mode='lines', name='Actuals'))
-fig.add_trace(go.Scatter(x=predicted_dates, y=next_7_days, mode='lines', name='Predicted Trend'))
+fig.add_trace(go.Scatter(x=data.index, y=data['Adj Close'], mode='markers', name='Actuals'))
+fig.add_trace(go.Scatter(x=predicted_dates, y=next_7_days, mode='markers', name='Predicted Trend'))
 
 mean_value = data['Adj Close'].mean()
 
