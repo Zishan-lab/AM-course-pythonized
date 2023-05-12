@@ -63,7 +63,7 @@ next_day_prediction = model.predict([[next_day]])
 next_7_days.append(next_day_prediction[0])
     
 # Append the predicted price to the DataFrame for the next iteration
-df = df.append({'Adj Close': next_day_prediction[0]}, ignore_index=True)
+df.loc[len(df)] = next_day_prediction[0]
 
 # Generate the x-axis values for the plot
 dates = pd.date_range(start=data.index[0], periods=len(data) + 7, freq='D')
