@@ -89,7 +89,7 @@ fig.add_trace(go.Scatter(x=all_dates, y=[mean_value] * len(all_dates), mode='lin
 fig.update_layout(
     title='Price evolution of ' + ticker,
     xaxis_title='Date',
-    yaxis_title='Adj Close'
+    yaxis_title='Adj Close',
     plot_bgcolor='rgba(0, 0, 128, 0.3)',
     shapes=[
         dict(
