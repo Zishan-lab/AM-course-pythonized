@@ -90,7 +90,6 @@ fig.update_layout(
     title='Price evolution of ' + ticker,
     xaxis_title='Date',
     yaxis_title='Adj Close',
-    plot_bgcolor='rgba(0, 0, 128, 0.3)',
     shapes=[
         dict(
             type='rect',
