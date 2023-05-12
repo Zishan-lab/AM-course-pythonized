@@ -19,6 +19,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import datetime
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 from scipy.stats import t
 
 def format_dataframe(df):
@@ -51,9 +52,13 @@ next_7_days = []
 X = np.array(range(len(df))).reshape(-1, 1)
 y = df['Adj Close']
 
+# Transform the features to include polynomial terms up to degree 2
+poly_features = PolynomialFeatures(degree=2)
+X_poly = poly_features.fit_transform(X)
+
 # Create and train the linear regression model
 model = LinearRegression()
-model.fit(X, y)
+model.fit(X_poly, y)
 
 # Predict the next 7 days' prices
 last_day = len(df) - 1
@@ -61,7 +66,8 @@ current_day = pd.to_datetime(data.index[-1])
 predicted_dates = pd.date_range(start=current_day, periods=7, freq='D')
 for i in range(7):
     next_day = last_day + i + 1
-    next_day_prediction = model.predict([[next_day]])
+    next_day_poly = poly_features.transform([[next_day]])
+    next_day_prediction = model.predict(next_day_poly)
     next_7_days.append(next_day_prediction[0])
 
 # Generate the x-axis values for the plot
