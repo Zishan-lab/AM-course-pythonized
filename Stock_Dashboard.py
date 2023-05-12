@@ -51,7 +51,7 @@ df['Next Day'] = df['Adj Close'].shift(-1)
 df = df.dropna()
 
 # Split the data into features (X) and target (y)
-X = df[['Adj Close']
+X = df[['Adj Close']]
 y = df['Next Day']
 
 # Create and train the linear regression model
