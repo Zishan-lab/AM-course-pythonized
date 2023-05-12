@@ -48,16 +48,17 @@ df['Adj Close'] = data['Adj Close']
 next_7_days = []
 
 # Perform linear regression and predict the trend for the next 7 days
-for i in range(7):
-    # Split the data into features (X) and target (y)
-    X = np.array(range(len(df))).reshape(-1, 1)
-    y = df['Adj Close']
-     # Create and train the linear regression model
-    model = LinearRegression()
-    model.fit(X, y)
-    
-    # Predict the next day's price
-    next_day = len(df) + i
+X = np.array(range(len(df))).reshape(-1, 1)
+y = df['Adj Close']
+
+# Create and train the linear regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Predict the next 7 days' prices
+last_day = len(df) - 1
+for i in range(1, 8):
+    next_day = last_day + i
     next_day_prediction = model.predict([[next_day]])
     next_7_days.append(next_day_prediction[0])
 
