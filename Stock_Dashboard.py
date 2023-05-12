@@ -64,7 +64,7 @@ for i in range(7):
 # Generate the x-axis values for the plot
 dates = pd.date_range(start=data.index[0], periods=len(data), freq='D')
 predicted_dates = pd.date_range(start=data.index[-1] + pd.DateOffset(days=1), periods=7, freq='D')
-all_dates = pd.concat([dates, predicted_dates])
+all_dates = dates.append(predicted_dates)
 
 # Plot the actual prices and the predicted trend
 fig = go.Figure()
