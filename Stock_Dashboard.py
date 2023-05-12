@@ -41,58 +41,37 @@ end_date = st.sidebar.date_input('End Date')
 #download yfinance data
 data = yf.download(ticker,start=start_date,end=end_date)
 
-#add a projection for the next day using linear regression
+#add a projection for the next 7 days using linear regression
 
 df = pd.DataFrame()
 df['Adj Close'] = data['Adj Close']
-df['Next Day'] = df['Adj Close'].shift(-1)
+next_7_days = []
 
-# Drop the last row since it will have NaN for the "Next Day" value
-df = df.dropna()
-
-# Split the data into features (X) and target (y)
-X = df[['Adj Close']]
-y = df['Next Day']
-
+# Perform linear regression and predict the trend for the next 7 days
+for i in range(7):
+    # Split the data into features (X) and target (y)
+    X = np.array(range(len(df))).reshape(-1, 1)
+    y = df['Adj Close']
+    
 # Create and train the linear regression model
 model = LinearRegression()
 model.fit(X, y)
 
-# Get the last observed "Adj Close" value to predict the next day's value
-last_adj_close = df['Adj Close'].iloc[-1]
+# Predict the next day's price
+next_day = len(df)
+next_day_prediction = model.predict([[next_day]])
+next_7_days.append(next_day_prediction[0])
+    
+# Append the predicted price to the DataFrame for the next iteration
+df = df.append({'Adj Close': next_day_prediction[0]}, ignore_index=True)
 
-# Predict the value for the next day
-next_day_prediction = model.predict([[last_adj_close]])
+# Generate the x-axis values for the plot
+dates = pd.date_range(start=data.index[0], periods=len(data) + 7, freq='D')
 
-# Create a scatter plot of the 'Adj Close' data
+# Plot the actual prices and the predicted trend
 fig = go.Figure()
-fig.add_trace(go.Scatter(
-    x=df.index,
-    y=df['Adj Close'],
-    mode='markers',
-    name='Actuals'
-))
-
-# Calculate the confidence interval
-confidence_interval = 0.95  # Set the desired confidence interval
-X_array = np.array(X)
-y_pred = model.predict(X_array)
-residuals = y - y_pred
-mean_residual = np.mean(residuals)
-std_residual = np.std(residuals)
-t_score = np.abs(t.ppf((1 - confidence_interval) / 2, df=len(X_array) - 1))
-margin_error = t_score * std_residual
-lower_bound = next_day_prediction - margin_error
-upper_bound = next_day_prediction + margin_error
-
-# Add the predicted value for the next day as a scatter point
-next_day = df.index[-1] + pd.DateOffset(days=1)
-fig.add_trace(go.Scatter(
-    x=[next_day],
-    y=next_day_prediction,
-    mode='markers',
-    name='Next Day Prediction'
-))
+fig.add_trace(go.Scatter(x=data.index, y=data['Adj Close'], mode='lines', name='Actuals'))
+fig.add_trace(go.Scatter(x=dates, y=next_7_days, mode='lines', name='Predicted Trend'))
 
 mean_value = data['Adj Close'].mean()
 
@@ -124,9 +103,9 @@ with pricing_data:
     st.write('Standard deviation is ', round(stdev*100,3), '%')
     st.write('Risk Adj. return is ', round(annual_return/(stdev*100),3), '%')
     st.write('Volatility for the period is ', round(vol,3), '%')
-    st.write("Next Day Price Prediction:", round(next_day_prediction[0],3), " $")
-    st.write("Lower Bound ({}% confidence):".format(confidence_interval * 100), round(lower_bound[0],3), " $")
-    st.write("Upper Bound ({}% confidence):".format(confidence_interval * 100), round(upper_bound[0],3), " $")
+    #st.write("Next Day Price Prediction:", round(next_day_prediction[0],3), " $")
+    #st.write("Lower Bound ({}% confidence):".format(confidence_interval * 100), round(lower_bound[0],3), " $")
+    #st.write("Upper Bound ({}% confidence):".format(confidence_interval * 100), round(upper_bound[0],3), " $")
 
 from alpha_vantage.fundamentaldata import FundamentalData
 
