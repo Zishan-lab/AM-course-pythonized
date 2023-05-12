@@ -83,7 +83,7 @@ fig.add_trace(go.Scatter(x=predicted_dates, y=next_7_days, mode='markers', name=
 mean_value = data['Adj Close'].mean()
 
 # Add a horizontal line for the mean value
-fig.add_trace(go.Scatter(x=all_dates, y=[mean_value] * len(all_dates), mode='lines', name=f'Mean Value: {mean_value:.3f} $', line=dict(color='red', dash='dash')))
+fig.add_trace(go.Scatter(x=all_dates, y=[mean_value] * len(all_dates), mode='lines', name=f'Mean Price: {mean_value:.3f} $', line=dict(color='red', dash='dash')))
 
 # Set plot title and axis labels
 fig.update_layout(
@@ -104,15 +104,11 @@ with pricing_data:
     annual_return = data2['% change'].mean()*252*100
     stdev = np.std(data2["% change"]*np.sqrt(252))
     vol = volatility = np.sqrt((annual_return / 100) * (annual_return/stdev) * 252 * stdev ** 2)
-    
-    st.write('Mean price of the stock for the period is ', round(mean_value,3), " $")
+    #write the data in streamlit
     st.write('Annual return is ', round(annual_return,3), '%')
     st.write('Standard deviation is ', round(stdev*100,3), '%')
     st.write('Risk Adj. return is ', round(annual_return/(stdev*100),3), '%')
     st.write('Volatility for the period is ', round(vol,3), '%')
-    #st.write("Next Day Price Prediction:", round(next_day_prediction[0],3), " $")
-    #st.write("Lower Bound ({}% confidence):".format(confidence_interval * 100), round(lower_bound[0],3), " $")
-    #st.write("Upper Bound ({}% confidence):".format(confidence_interval * 100), round(upper_bound[0],3), " $")
 
 from alpha_vantage.fundamentaldata import FundamentalData
 
