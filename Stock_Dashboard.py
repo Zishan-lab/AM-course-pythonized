@@ -7,6 +7,7 @@ Todos :
     - Add additional information on Pricing Data
     - Improve readability of Fundamental Data : done for numbers, missing spaces added to the indexes
     - Add a DCF
+    - add more charts for different tickers with the option of selecting any which one or multiple
     
 
 @author: zishan-lab
