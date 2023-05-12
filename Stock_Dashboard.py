@@ -90,6 +90,21 @@ fig.update_layout(
     title='Price evolution of ' + ticker,
     xaxis_title='Date',
     yaxis_title='Adj Close'
+    plot_bgcolor='rgba(0, 0, 128, 0.3)',
+    shapes=[
+        dict(
+            type='rect',
+            xref='x',
+            yref='paper',
+            x0=predicted_dates[0],
+            y0=0,
+            x1=predicted_dates[-1],
+            y1=1,
+            fillcolor='rgba(0, 0, 128, 0.3)',
+            layer='below',
+            line_width=0,
+        )
+    ]
 )
 
 st.plotly_chart(fig)
