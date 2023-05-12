@@ -57,8 +57,10 @@ model.fit(X, y)
 
 # Predict the next 7 days' prices
 last_day = len(df) - 1
-for i in range(1, 8):
-    next_day = last_day + i
+current_day = pd.to_datetime(data.index[-1])
+predicted_dates = pd.date_range(start=current_day + pd.DateOffset(days=1), periods=7, freq='D')
+for i in range(7):
+    next_day = last_day + i + 1
     next_day_prediction = model.predict([[next_day]])
     next_7_days.append(next_day_prediction[0])
 
@@ -70,7 +72,7 @@ all_dates = dates.append(predicted_dates)
 # Plot the actual prices and the predicted trend
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=data.index, y=data['Adj Close'], mode='lines', name='Actuals'))
-fig.add_trace(go.Scatter(x=dates, y=next_7_days, mode='lines', name='Predicted Trend'))
+fig.add_trace(go.Scatter(x=predicted_dates, y=next_7_days, mode='lines', name='Predicted Trend'))
 
 mean_value = data['Adj Close'].mean()
 
